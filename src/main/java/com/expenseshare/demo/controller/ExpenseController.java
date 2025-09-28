@@ -1,39 +1,48 @@
 package com.expenseshare.demo.controller;
 
 import com.expenseshare.demo.dto.ExpenseDto;
-import com.expenseshare.demo.dto.GroupDto;
-import com.expenseshare.demo.entity.Expense;
-import com.expenseshare.demo.entity.Group;
+import com.expenseshare.demo.dto.ExpenseResponseDto;
 import com.expenseshare.demo.services.ExpenseService;
-import com.expenseshare.demo.services.GroupService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/expenses")
+@RequiredArgsConstructor
+@Slf4j
 public class ExpenseController {
 
     private final ExpenseService expenseService;
 
-    public ExpenseController(@Autowired ExpenseService expenseService){
-        this.expenseService = expenseService;
+    @PostMapping("/expenses")
+    public ResponseEntity<ExpenseResponseDto> createExpense(@RequestBody ExpenseDto expenseDto) {
+        log.info("Creating expense request: {}", expenseDto);
+        ExpenseResponseDto response = expenseService.createExpense(expenseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping
-    ResponseEntity<ExpenseDto> addExpense(@RequestBody ExpenseDto expense){
-        expenseService.addExpense(expense);
-        return  new ResponseEntity<>(expense, HttpStatus.OK);
+    @GetMapping("/expenses/{expenseId}")
+    public ResponseEntity<ExpenseResponseDto> getExpense(@PathVariable Long expenseId) {
+        log.info("Fetching expense with id: {}", expenseId);
+        ExpenseResponseDto response = expenseService.getExpenseById(expenseId);
+        return ResponseEntity.ok(response);
     }
 
-    @PutMapping
-    ResponseEntity<ExpenseDto> modifyExpense(@RequestBody ExpenseDto expense){
-        return  new ResponseEntity<>(expense, HttpStatus.OK);
+    @GetMapping("/expenses/group/{groupId}")
+    public ResponseEntity<List<ExpenseResponseDto>> getExpensesByGroup(@PathVariable Long groupId) {
+        log.info("Fetching expenses for group id: {}", groupId);
+        List<ExpenseResponseDto> responses = expenseService.getExpensesByGroup(groupId);
+        return ResponseEntity.ok(responses);
     }
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteGroup(@PathVariable Long id){
-        return  new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/expenses/user/{userId}")
+    public ResponseEntity<List<ExpenseResponseDto>> getExpensesByUser(@PathVariable Long userId) {
+        log.info("Fetching expenses for user id: {}", userId);
+        List<ExpenseResponseDto> responses = expenseService.getExpensesByUser(userId);
+        return ResponseEntity.ok(responses);
     }
 }
