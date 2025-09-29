@@ -50,7 +50,7 @@ spring.jpa.hibernate.ddl-auto=update
 ### Step 1: Import collection
 1. Open Postman
 2. Click **Import** → choose API collection file (or manually add endpoints).
-
+   Expense Sharing App API.postman_collection.json
 ### Step 2: Example endpoints
 
 #### User APIs
@@ -92,16 +92,4 @@ Response:
 
 ---
 
-## Running Tests
-To run the unit and integration tests:
-```bash
-mvn test
-```
-
----
-
-## Next Steps
-- Secure APIs (Spring Security + OAuth2 / JWT)
-- Add Swagger UI (`springdoc-openapi`) for live API documentation
-- Dockerize app for deployment
 

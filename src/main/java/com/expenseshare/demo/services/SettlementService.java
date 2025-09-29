@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -288,8 +289,8 @@ public class SettlementService {
     public SettlementResponseDto mapToSettlementResponse(Settlement settlement) {
         List<SettlementGroupDetailDto> groupDetails = settlement.getSettlementDetails().stream()
                 .map(detail -> SettlementGroupDetailDto.builder()
-                        .groupId(detail.getGroup().getId())
-                        .groupName(detail.getGroup().getName())
+                        .groupId(Objects.nonNull(detail.getGroup()) ? detail.getGroup().getId() : 0L)
+                        .groupName(Objects.nonNull(detail.getGroup()) ? detail.getGroup().getName() : "")
                         .amountSettled(detail.getAmountSettled())
                         .balanceBefore(detail.getBalanceBefore())
                         .balanceAfter(detail.getBalanceAfter())

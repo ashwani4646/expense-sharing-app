@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "818bd38f-d9fb-4783-ae44-7b89b7287842",
+		"name": "Expense Sharing App API",
+		"description": "Postman collection for testing Expense Sharing App APIs.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "46822043",
+		"_collection_link": "https://ashwanisharma-4786272.postman.co/workspace/Ashwani-Sharma's-Workspace~4ac61b8f-4374-431a-8b4e-79443df54fa8/collection/46822043-818bd38f-d9fb-4783-ae44-7b89b7287842?action=share&source=collection_link&creator=46822043"
+	},
+	"item": [
+		{
+			"name": "User APIs",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\"\n}"
+						},
+						"url": "http://localhost:8080/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/users/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group APIs",
+			"item": [
+				{
+					"name": "Create Group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Trip to Dubai\"\n}"
+						},
+						"url": "http://localhost:8080/groups"
+					},
+					"response": []
+				},
+				{
+					"name": "Add User to Group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 2\n}"
+						},
+						"url": "http://localhost:8080/groups/1/add-user"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Expense and Balance Update APIs",
+			"item": [
+				{
+					"name": "Add Expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"groupId\": 1,\n  \"description\": \"Dinner\",\n  \"amount\": 1200,\n  \"paidBy\": 2,\n  \"splitBetween\": [\n    1,\n    2,\n    3\n  ]\n}"
+						},
+						"url": "http://localhost:8080/expenses"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group Expenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/expenses/group/1"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settlement APIs",
+			"item": [
+				{
+					"name": "Settle Balances",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"groupId\": 1,\n  \"paidBy\": 2,\n  \"paidTo\": 3,\n  \"amount\": 500\n}"
+						},
+						"url": "http://localhost:8080/balances/settle"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
