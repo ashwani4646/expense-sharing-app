@@ -275,6 +275,8 @@ public class BalanceService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
     }
+
+
 }
 
 
