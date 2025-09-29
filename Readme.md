@@ -12,7 +12,7 @@ A Spring Boot application for managing groups, expenses, balances, and settlemen
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/expense-sharing-app.git
+git clone https://github.com/ashwani4646/expense-sharing-app.git
 cd expense-sharing-app
 ```
 
