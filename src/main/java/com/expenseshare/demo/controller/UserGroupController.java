@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,10 +51,14 @@ public class UserGroupController {
     }
 
     @PutMapping("/users/role")
-    public ResponseEntity<UserResponseDto> updateUserRole(@Valid @RequestBody UpdateUserRoleDto request) {
+    public ResponseEntity<UserResponseDto> updateUserRole(@AuthenticationPrincipal CustomOAuth2User principal,
+                                                          @Valid @RequestBody UpdateUserRoleDto request) {
         log.info("Received request to update user {} role to {}", request.getUserId(), request.getRole());
-        UserResponseDto user = userGroupService.updateUserRole(request);
-        return ResponseEntity.ok(user);
+        User user = principal.getUser();
+        user.setRole(request.getRole());
+        UserResponseDto userDto = userGroupService.updateUserRole(request, user);
+
+        return ResponseEntity.ok(userDto);
     }
     // Group endpoints
     @PostMapping("/groups")

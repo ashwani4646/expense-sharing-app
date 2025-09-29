@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -59,6 +58,8 @@ public class User {
     @Builder.Default
     private Role role = Role.USER;
 
+    private String provider; // GOOGLE, LOCAL
+    private String providerId;
 
 
     @Column(name = "created_at")
@@ -76,8 +77,12 @@ public class User {
             role = Role.USER;
         }
     }
-    @ManyToOne(targetEntity = Group.class, fetch = FetchType.LAZY)
+
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     @JsonIgnore
+    @Builder.Default
+    private Set<Group> groups = new HashSet<>();
+
 
     public boolean isAdmin() {
         return Role.ADMIN.equals(this.role);

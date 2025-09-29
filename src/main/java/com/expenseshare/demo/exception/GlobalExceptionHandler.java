@@ -69,14 +69,14 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(UserNotFoundException ex) {
-        log.error("User not found: {}", ex.getMessage());
-        return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
-    }
 
     @ExceptionHandler(InvalidExpenseDataException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidExpenseDataException(InvalidExpenseDataException ex) {
+        log.error("Invalid expense data: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+    @ExceptionHandler(GenericException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidExpenseDataException(GenericException ex) {
         log.error("Invalid expense data: {}", ex.getMessage());
         return createErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
@@ -96,6 +96,34 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(status).body(errorResponse);
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(UserNotFoundException ex) {
+        log.error("User not found: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidSettlementException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidSettlementException(InvalidSettlementException ex) {
+        log.error("Invalid settlement: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<Map<String, Object>> handleInsufficientBalanceException(InsufficientBalanceException ex) {
+        log.error("Insufficient balance: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(ConcurrentSettlementException.class)
+    public ResponseEntity<Map<String, Object>> handleConcurrentSettlementException(ConcurrentSettlementException ex) {
+        log.error("Concurrent settlement: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+
+
+
 
     @Data
     @AllArgsConstructor

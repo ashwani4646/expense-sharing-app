@@ -9,7 +9,6 @@ import com.expenseshare.demo.exception.ResourceNotFoundException;
 import com.expenseshare.demo.mapper.GroupMapper;
 import com.expenseshare.demo.repository.GroupRepository;
 import com.expenseshare.demo.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,14 +136,14 @@ public class UserGroupService {
         groupRepository.deleteById(id);
     }
 
-    public UserResponseDto updateUserRole(UpdateUserRoleDto updateUserRoleDto) {
+    public UserResponseDto updateUserRole(UpdateUserRoleDto updateUserRoleDto, User updateUser) {
         log.info("Updating role for user ID {} to {}", updateUserRoleDto.getUserId(), updateUserRoleDto.getRole());
 
         User user = userRepository.findById(updateUserRoleDto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + updateUserRoleDto.getUserId()));
 
         Role oldRole = user.getRole();
-        user.setRole(updateUserRoleDto.getRole());
+        user.setRole(updateUser.getRole());
         User updatedUser = userRepository.save(user);
 
         log.info("User {} role updated from {} to {}",
